@@ -1,10 +1,3 @@
-## Abstract
-This article provide guidelines and considerations to provision the User Provided Infrastructure to deploy a reference implementation of Red Hat® OpenShift Container Platform 3.
-
-Refer to https://github.com/IBMTerraform/terraform-ibm-openshift/blob/master/docs/02-Deploy-OpenShift.md to Deploy & Manage the Red Hat® OpenShift Container Platform on IBM Cloud.
-
-# Phase 1: Provision Infrastructure
-
 # WORK IN PROGRESS, NOT READY
 
 This is meant to be used as a module, make sure your module implementation sets all the variables in its terraform.tfvars file
