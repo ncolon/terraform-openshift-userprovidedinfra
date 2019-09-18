@@ -1,5 +1,6 @@
 variable "bastion_hostname" {}
 variable "bastion_public_ip" {}
+variable "bastion_private_ip" {}
 variable "master_hostname"   { type = "list" }
 variable "master_private_ip" { type = "list" }
 variable "infra_hostname"    { type = "list" }
@@ -14,10 +15,8 @@ variable "storage_private_ip" {
     type = "list"
     default = []
 }
-variable "password" {}
-variable "username" {}
 
-
-variable "public_master_vip" {}
-
-variable "public_app_vip" {}
+variable "ssh_username" {}
+variable "ssh_password" {}
+variable "ssh_private_key" {}
+variable "ssh_public_key" {}
