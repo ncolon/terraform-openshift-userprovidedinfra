@@ -11,21 +11,54 @@ This is meant to be used as a module, make sure your module implementation sets 
 
 ```terraform
 module "infrastructure" {
-    source             = "github.com/ncolon/terraform-openshift-userprovidedinfra.git?ref=v0.2"
-    bastion_hostname   = "${var.bastion_hostname}"
-    bastion_public_ip  = "${var.bastion_public_ip}"
-    master_hostname    = "${var.master_hostname}"
-    master_private_ip  = "${var.master_private_ip}"
-    infra_hostname     = "${var.infra_hostname}"
-    infra_private_ip   = "${var.infra_private_ip}"
-    worker_hostname    = "${var.worker_hostname}"
-    worker_private_ip  = "${var.worker_private_ip}"
-    storage_hostname   = "${var.storage_hostname}"
-    storage_private_ip = "${var.storage_private_ip}"
-    password           = "${var.password}"
-    username           = "${var.username}"
-    public_master_vip  = "${var.public_master_vip}"
-    public_app_vip     = "${var.public_app_vip}"
+    source             = "github.com/ncolon/terraform-openshift-userprovidedinfra.git?ref=v0.3"
+    bastion_hostname   = "ocp-ncolon-3972bde1-bastion-01"
+    bastion_public_ip  = "9.42.67.175"
+    bastion_private_ip = "192.168.200.201"
+    ssh_username       = "${var.ssh_user}"
+    ssh_password       = "${var.ssh_password}"
+    master_hostname    = [
+      "ocp-ncolon-3972bde1-master-01",
+      "ocp-ncolon-3972bde1-master-02",
+      "ocp-ncolon-3972bde1-master-03"
+    ]
+    master_private_ip  = [
+      "192.168.200.202",
+      "192.168.200.203",
+      "192.168.200.204",
+    ]
+    infra_hostname = [
+      "ocp-ncolon-3972bde1-infra-01",
+      "ocp-ncolon-3972bde1-infra-02",
+      "ocp-ncolon-3972bde1-infra-03",
+    ]
+    infra_private_ip = [
+      "192.168.200.205",
+      "192.168.200.206",
+      "192.168.200.207",
+    ]
+    worker_hostname = [
+      "ocp-ncolon-3972bde1-worker-01",
+      "ocp-ncolon-3972bde1-worker-02",
+      "ocp-ncolon-3972bde1-worker-03",
+    ]
+    worker_private_ip = [
+      "192.168.200.208",
+      "192.168.200.209",
+      "192.168.200.210",
+    ]
+    storage_hostname = [
+      "ocp-ncolon-3972bde1-storage-01",
+      "ocp-ncolon-3972bde1-storage-02",
+      "ocp-ncolon-3972bde1-storage-03",
+    ]
+    storage_private_ip = [
+      "192.168.200.211",
+      "192.168.200.212",
+      "192.168.200.213",
+    ]
+    ssh_private_key    = "${tls_private_key.installkey.private_key_pem}"
+    ssh_public_key     = "${tls_private_key.installkey.public_key_openssh}"
 }
 ```
 
@@ -45,8 +78,6 @@ module "infrastructure" {
 |storage_private_ip|List of Private IPv4 Addresses for the GlusterFS VMs|-|
 |username|SSH User.  Must have passwordless sudo access|-|
 |password|SSH Password|-|
-|public_master_vip|DNS CNAME for Master Cluster|-|
-|public_app_vip|DNS CNAME for Apps Cluster ex:`apps.example.com`|-|
 
 
 ## Module Output
@@ -54,6 +85,7 @@ module "infrastructure" {
 |-------------|-----------|-------------|
 |bastion_hostname|Hostname for the Bastion VM|string|
 |bastion_public_ip|Public IPv4 Address for the Bastion VM|string|
+|bastion_private_ip|Private IPv4 Address for the Bastion VM|string|
 |master_hostname|List of Hostnames for the Master VMs|list|
 |master_private_ip|List of Private IPv4 Addresses for the Master VMs|list|
 |infra_hostname|List of hostnames for the Infra VMs|list|
@@ -62,64 +94,7 @@ module "infrastructure" {
 |worker_private_ip|List of Private IPv4 Addresses for the Worker VMs|list|
 |storage_hostname|List of hostnames for the GlusterFS VMs|list|
 |storage_private_ip|List of Private IPv4 Addresses for the GlusterFS VMs|list|
-|username|SSH User.  Must have passwordless sudo access|string|
-|password|SSH Password|string|
-|public_master_vip|DNS CNAME for Master Cluster|string|
-|public_app_vip|DNS CNAME for Apps Cluster ex:`apps.example.com`|string|
 
 
 The infrastructure is already provided by your cloud or infrastructure administrator.  To use this module, you need to set the variables in `variables.tf` or `terraform.tfvars`
-
-## Sample Variables in your variable.tf files
-```terraform
-bastion_hostname = "ocp-vmware-bastion-01"
-bastion_public_ip = "9.42.67.175"
-
-infra_hostname = [
-    "ocp-vmware-infra-01"
-]
-
-infra_private_ip = [
-    "192.168.200.203"
-]
-
-
-master_hostname = [
-    "ocp-vmware-master-01"
-]
-
-
-master_private_ip = [
-    "192.168.200.202",
-]
-
-
-storage_hostname = [
-    "ocp-vmware-storage-01",
-    "ocp-vmware-storage-02",
-    "ocp-vmware-storage-03"
-]
-
-storage_private_ip = [
-    "192.168.200.207",
-    "192.168.200.208",
-    "192.168.200.209"
-]
-
-worker_hostname = [
-    "ocp-vmware-worker-01",
-    "ocp-vmware-worker-02",
-    "ocp-vmware-worker-03"
-]
-
-worker_private_ip = [
-    "192.168.200.204",
-    "192.168.200.205",
-    "192.168.200.206"
-]
-
-public_master_vip = "ocp-vmware-master.rtp.raleigh.ibm.com"
-public_app_vip = "ocp-vmware-apps.rtp.raleigh.ibm.com"
-username = "root"
-password = "mySecretPassw0rd"
 ```
