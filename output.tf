@@ -7,13 +7,6 @@ output "bastion_public_ip" {
     value = "${var.bastion_public_ip}"
 }
 
-output "haproxy_hostname" {
-    value = "${var.haproxy_hostname}"
-}
-output "haproxy_public_ip" {
-    value = "${var.haproxy_public_ip}"
-}
-
 output "infra_hostname" {
     value = "${var.infra_hostname}"
 }

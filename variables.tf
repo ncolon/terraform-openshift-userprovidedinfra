@@ -14,15 +14,6 @@ variable "storage_private_ip" {
     type = "list"
     default = []
 }
-variable "haproxy_hostname"  {
-    type = "list"
-    default = []
-}
-variable "haproxy_public_ip" {
-    type = "list"
-    default = []
-}
-
 variable "password" {}
 variable "username" {}
 

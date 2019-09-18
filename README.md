@@ -11,7 +11,7 @@ This is meant to be used as a module, make sure your module implementation sets 
 
 ```terraform
 module "infrastructure" {
-    source             = "git::ssh://git@github.ibm.com/ncolon/terraform-openshift-userprovidedinfra.git"
+    source             = "github.com/ncolon/terraform-openshift-userprovidedinfra.git?ref=v0.2"
     bastion_hostname   = "${var.bastion_hostname}"
     bastion_public_ip  = "${var.bastion_public_ip}"
     master_hostname    = "${var.master_hostname}"
@@ -22,8 +22,6 @@ module "infrastructure" {
     worker_private_ip  = "${var.worker_private_ip}"
     storage_hostname   = "${var.storage_hostname}"
     storage_private_ip = "${var.storage_private_ip}"
-    haproxy_hostname   = "${var.haproxy_hostname}"
-    haproxy_public_ip  = "${var.haproxy_public_ip}"
     password           = "${var.password}"
     username           = "${var.username}"
     public_master_vip  = "${var.public_master_vip}"
@@ -45,8 +43,6 @@ module "infrastructure" {
 |worker_private_ip|List of Private IPv4 Addresses for the Worker VMs|-|
 |storage_hostname|List of hostnames for the GlusterFS VMs|-|
 |storage_private_ip|List of Private IPv4 Addresses for the GlusterFS VMs|-|
-|haproxy_hostname|List of hostnames for the HAProxy VMs|-|
-|haproxy_private_ip|List of Private IPv4 Addresses for the HAProxy VMs|-|
 |username|SSH User.  Must have passwordless sudo access|-|
 |password|SSH Password|-|
 |public_master_vip|DNS CNAME for Master Cluster|-|
@@ -66,8 +62,6 @@ module "infrastructure" {
 |worker_private_ip|List of Private IPv4 Addresses for the Worker VMs|list|
 |storage_hostname|List of hostnames for the GlusterFS VMs|list|
 |storage_private_ip|List of Private IPv4 Addresses for the GlusterFS VMs|list|
-|haproxy_hostname|List of hostnames for the HAProxy VMs|list|
-|haproxy_private_ip|List of Private IPv4 Addresses for the HAProxy VMs|list|
 |username|SSH User.  Must have passwordless sudo access|string|
 |password|SSH Password|string|
 |public_master_vip|DNS CNAME for Master Cluster|string|
@@ -80,16 +74,6 @@ The infrastructure is already provided by your cloud or infrastructure administr
 ```terraform
 bastion_hostname = "ocp-vmware-bastion-01"
 bastion_public_ip = "9.42.67.175"
-
-haproxy_hostname = [
-    "ocp-vmware-haproxy-01",
-    "ocp-vmware-haproxy-02"
-]
-
-haproxy_public_ip = [
-    "9.42.67.176",
-    "9.42.67.177"
-]
 
 infra_hostname = [
     "ocp-vmware-infra-01"
