@@ -3,6 +3,11 @@
 This is meant to be used as a module, make sure your module implementation sets all the variables in its terraform.tfvars file
 
 ```terraform
+resource "tls_private_key" "installkey" {
+  algorithm = "RSA"
+  rsa_bits = "2048"
+}
+
 module "infrastructure" {
     source             = "github.com/ncolon/terraform-openshift-userprovidedinfra.git?ref=v0.3"
     bastion_hostname   = "ocp-ncolon-3972bde1-bastion-01"
